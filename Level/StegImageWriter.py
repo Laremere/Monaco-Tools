@@ -1,0 +1,4 @@
+
+
+# class StegImageWriter:
+    # pass
