@@ -1,0 +1,1 @@
+This is my old version of the level editor before I decided to rewrite it so that it's easier to work with.  It's here for reference for others and will be removed once the main editor is at full force.  I won't provide support for it. -Laremere
