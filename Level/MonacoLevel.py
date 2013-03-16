@@ -4,6 +4,7 @@ import Environment
 import Characters
 import GameMode
 import GoalType
+import Floor
 
 class Level(object):
     """Monaco Level Object"""
@@ -23,11 +24,14 @@ class Level(object):
         self._goalIcon = None
         self._infiniteMoney = None
         self._dialogue = None
-        self._floors = None
+        self._floors = list()
+        for i in range(8):
+            self._floors.append(Floor.Floor())
 
         
         if filepath:
             self._load(filepath)
+        
         
         if len(self._Characters) == 0:
             self._Characters = [Characters.Locksmith, \
@@ -78,8 +82,24 @@ class Level(object):
     def setGoalType(self, goalType):
         assert isinstance(goalType, GoalType.GoalType)
         self._goalType = goalType
+        
+    def getAddress(self):
+        return self._address
+        
+    def setAddress(self,address):
+        assert isinstance(address, str)
+        self._address = address
 
-
+    def    getMoneyRespawn(self):
+        return self._infiniteMoney
+        
+    def setMoneyRespawn(self, respawn):
+        assert isinstance(respawn, bool)
+        self._infiniteMoney = respawn
+        
+    def getFloor(self, floor):
+        return self._floors[floor]
+        
     def _load(self, filepath):
         dataPoints = StegImageReader.load(filepath)
         
@@ -87,7 +107,7 @@ class Level(object):
         
         for i in dataPoints:
             if i[0] == "ADDRESS":
-                pass
+                self._address = i[1]
             elif i[0] == "WEATHERNAME":
                 self.setEnvironment(Environment._getEnvironment(i[1]))
             elif i[0] == "GAMEMODE":
@@ -104,18 +124,20 @@ class Level(object):
             elif i[0] == "GOALTEXT":
                 self.setGoalText(i[1])
             elif i[0] == "INFINITEMONEY":
-                pass
+                self._infiniteMoney = True
             elif i[0] == "DIALOGUE":
                 pass
             elif i[0] == "MAPSTART":
                 curFloor += 1
-            elif curFloor >= 0:
+            elif 0 <= curFloor < 8:
                 if i[0] == "MAPNAME":
-                    pass
+                    self._floors[curFloor].setName(i[1])
                 elif i[0] == "ROOMNAMES":
-                    pass
+                    for j in range(16):
+                        self._floors[curFloor].setRoomName(j, i[1][j])
                 elif i[0] == "MAPDATA":
-                    pass
+                    self._floors[curFloor]._dumpData(i[1])
 
 if __name__ == "__main__":
-    a = Level("C1M01_Prison.png")
+    filepath = open("./../filepath.txt").read()
+    a = Level(filepath + "/Textures/Worlds/Campaign_Part1/C1M01_Prison.png")
