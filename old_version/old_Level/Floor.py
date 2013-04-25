@@ -1,9 +1,9 @@
 import copy
 
-Architecture = 0
-Furniture = 1
-Item = 2
-Meta = 3
+#Architecture = 0
+#Furniture = 1
+#Item = 2
+#Meta = 3
 
 class Floor(object):
     def __init__(self):
