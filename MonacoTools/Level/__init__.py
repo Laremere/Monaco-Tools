@@ -1,1 +1,1 @@
-import Level
+from Level import *
