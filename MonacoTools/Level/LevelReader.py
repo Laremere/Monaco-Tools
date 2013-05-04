@@ -1,26 +1,4 @@
-Flags = type("MapFlags", (), {a:b for b,a in enumerate([
-        "VERSION",
-        "WORLDNAME",
-        "ADDRESS",
-        "SUBTITLE",
-        "STARTTITLE",
-        "WEATHERNAME",
-        "TOTALMONEY",
-        "LEGALCHARACTERS",
-        "GOALTYPE",
-        "MAPSTART",
-        "MAPNAME",
-        "ROOMNAMES",
-        "LOOTCOUNT",
-        "MAPDATA",
-        "EOF",
-        "GOALTEXT",
-        "GOALICON",
-        "INFINITEMONEY",
-        "DIALOGUE",
-        "GAMEMODE",
-    ])})
-
+from LevelFlags import Flags
         
 class LevelReader(object):
     """Takes a PIL image and reads the pixels into  map data bytes"""
@@ -48,6 +26,7 @@ class LevelReader(object):
         num = 0
         for i in range(0, length):
             num += self.rawData.next() << (i * 8)
+        return num
             
     def _readString(self):
         length = self.rawData.next()
